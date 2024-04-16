@@ -1,15 +1,22 @@
 import ex from 'express';
 import cors from 'cors';
+import path from 'path'
 import { User } from './models/User.js';
 import { Activity } from './models/Activity.js';
 
 const app = ex();
+const dir = path.resolve();
 
 app.use(cors());
 app.use(ex.json());
+app.use(ex.static('front'));
 
 app.listen('3306', function(){
     console.log("Server started")
+})
+
+app.get('/', function(req,res){
+    res.sendFile(dir + '/index.html');
 })
 
 app.get('/user', function(req,res){
