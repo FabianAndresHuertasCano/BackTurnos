@@ -11,7 +11,7 @@ app.use(cors());
 app.use(ex.json());
 app.use(ex.static('front/build'));
 
-app.listen('3306', function(){
+app.listen('8080', function(){
     console.log("Server started")
 })
 
