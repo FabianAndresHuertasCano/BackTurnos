@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center pb-2">
+            <h5 class="card-title">Lista de Actividades de {{userName}} </h5>
+            <div class="ms-auto" aria-hidden="true"><button type="button" [routerLink]="['/activity/add' , user.id, user.name]" class="btn btn-primary justify-content-end"><i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Agregar Nueva Actividad</button></div>
+        </div>
+        <div class="alert alert-primary" role="alert" *ngIf="loading">
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            Cargando Actividades
+        </div>
+        <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="isError">
+            <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;
+            <div>
+              Ocurrió un error al consultar actividades: {{errorMessage}}
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col float-left">
+                <h5 class="card-title">Lista de Actividades de {{user.name}} </h5>
+            </div>
+            <div class="col float-end">
+                <button type="button" class="btn btn-primary row justify-content-end">Primary</button>
+            </div>
+        </div> -->
+        <table class="table table-striped p-2 mt-3">
+            <thead>
+                <th scope="col">Acciones</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Minutos</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let activity of activities">
+                    <td>
+                        <div class="d-grid gap-2 d-md-block">
+                            <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/activity/edit' , activity.id]">
+                                <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editar
+                            </button>
+                        </div>
+                    </td>
+                    <td>{{activity.name}}</td>
+                    <td>{{activity.minutes}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

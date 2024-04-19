@@ -1,0 +1,81 @@
+
+<div class="card">
+    
+    <div class="card-body">
+        <h5 class="card-title">Editar usuario # {{this.user.id}}</h5>
+        <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="isError">
+            <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;
+            <div>
+              Ocurrió un error al actualizar el usuario: {{errorMessage}}
+            </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="isSuccess">
+            <i class="bi bi-check-circle-fill"></i>&nbsp;
+            <div>
+              {{successMessage}}
+            </div>
+        </div>
+        <form 
+            class="border border-light p-2"
+            (ngSubmit)="onSubmit()"
+        >
+            <!-- Nombre -->
+            <div class="form-group mb-4" >
+                <label for="name">Nombre de usuario</label>
+                <div class="input-group ">
+                    <span class="input-group-text">
+                        <i class="bi bi-person-square"></i>
+                    </span>
+                    <input 
+                        class="form-control"
+                        [ngModelOptions]="{standalone: true}" 
+                        id="name" 
+                        [(ngModel)]='user.name' 
+                        placeholder="Nombre de usuario"
+                    >
+                </div>
+            </div>
+            
+            <!-- Documento -->
+            <div class="form-group mb-4">
+                <label for="document">Documento</label>
+                <div class="input-group ">
+                    
+                    <span class="input-group-text">
+                        <i class="bi bi-person-vcard"></i>
+                    </span>
+                    <input 
+                        class="form-control"
+                        [ngModelOptions]="{standalone: true}" 
+                        id="document" 
+                        [(ngModel)]='user.document' 
+                        placeholder="Documento"
+                    >
+                </div>
+            </div>
+            
+            
+            <!-- Correo -->
+            <div class="form-group mb-4">
+                <label for="email">Correo</label>
+                <div class="input-group">
+                    
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope-at"></i>
+                    </span>
+                    <input 
+                        class="form-control"
+                        [ngModelOptions]="{standalone: true}" 
+                        id="email" 
+                        [(ngModel)]='user.email' 
+                        placeholder="Correo"
+                    >
+                </div>
+            </div>
+            
+            <!-- Editar Usuario -->
+            <button type="button" class="btn btn-primary" type="submit"><i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editar Usuario</button>
+        </form>
+    </div>
+</div>   
+<app-activity *ngIf="user.id > 0" [user]="user"></app-activity>

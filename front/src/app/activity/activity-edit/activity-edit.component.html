@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Editar Actividad # {{this.activity.id}}</h5>
+        <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="isError">
+            <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;
+            <div>
+              Ocurrió un error al actualizar la actividad: {{errorMessage}}
+            </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="isSuccess">
+            <i class="bi bi-check-circle-fill"></i>&nbsp;
+            <div>
+              {{successMessage}}
+            </div>
+        </div>
+        <form 
+            class="border border-light p-2"
+            (ngSubmit)="onSubmit()"
+        >
+            <!-- Nombre -->
+            <div class="form-group mb-4" >
+                <label for="name">Nombre de actividad</label>
+                <div class="input-group ">
+                    <span class="input-group-text">
+                        <i class="bi bi-person-square"></i>
+                    </span>
+                    <input 
+                        class="form-control"
+                        [ngModelOptions]="{standalone: true}" 
+                        id="name" 
+                        [(ngModel)]='activity.name' 
+                        placeholder="Nombre de actividad"
+                    >
+                </div>
+            </div>
+            <!-- Minutos -->
+            <div class="form-group mb-4" >
+                <label for="name">Minutos</label>
+                <div class="input-group ">
+                    <span class="input-group-text">
+                        <i class="bi bi-person-square"></i>
+                    </span>
+                    <input 
+                        class="form-control"
+                        [ngModelOptions]="{standalone: true}" 
+                        id="name"
+                        type="number"
+                        [(ngModel)]='activity.minutes' 
+                        placeholder="Minutos"
+                    >
+                </div>
+            </div>
+            
+            <!-- Crear Actividad -->
+            <button type="button" class="btn btn-primary" type="submit">Editar Actividad</button>
+            <button type="button" class="btn btn-link" [routerLink]="['/user/edit' , id]">Volver a usuario</button>
+        </form>
+    </div>
+</div>   

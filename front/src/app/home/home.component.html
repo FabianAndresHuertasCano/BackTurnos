@@ -1,0 +1,40 @@
+<!--La documentación para usar bootstrap esta en https://getbootstrap.com/-->
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Lista de Usuarios</h5>
+        <div class="alert alert-primary" role="alert" *ngIf="loading">
+            <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            Cargando Usuarios
+        </div>
+        <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="isError">
+            <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;
+            <div>
+              Ocurrió un error al consultar usuarios: {{errorMessage}}
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <th scope="col">Acciones</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Documento</th>
+                <th scope="col">Correo</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>
+                        <div class="d-grid gap-2 d-md-block">
+                            <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/user/edit' , user.id]">
+                                <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Editar
+                            </button>
+                        </div>
+                    </td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.document}}</td>
+                    <td>{{user.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
