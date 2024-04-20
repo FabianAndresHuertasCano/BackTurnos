@@ -11,7 +11,7 @@ app.use(cors());
 app.use(ex.json());
 app.use(ex.static('front/build'));
 
-app.listen('80', function(){
+app.listen('8080', function(){
     console.log("Server started")
 })
 
@@ -25,14 +25,7 @@ app.get('/user', function(req,res){
     users.push(new User(2, 'María', '87654321', 'maria@example.com'))
     res.json(users)
 })
-app.get('/userById', function(req,res){
-    if(req.query.id == 1){
-        res.json(new User(1, 'Juan', '12345678', 'juan@example.com'))
-    }
-    if(req.query.id == 2){
-        res.json(new User(2, 'María', '87654321', 'maria@example.com'))
-    }
-})
+
 app.post('/user', function(req, res){
     new User(0,req.body.name,req.body.document,req.email);
     //Crear usuario en base de datos
