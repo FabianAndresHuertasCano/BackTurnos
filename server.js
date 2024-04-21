@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path'
 import { User } from './models/User.js';
 import { Activity } from './models/Activity.js';
+import * as db from './db.js';
 
 const app = ex();
 const dir = path.resolve();
@@ -20,17 +21,35 @@ app.get('/', function(req,res){
 })
 
 app.get('/user', function(req,res){
-    let users = [];
-    users.push(new User(1, 'Juan', '12345678', 'juan@example.com'))
-    users.push(new User(2, 'María', '87654321', 'maria@example.com'))
-    res.json(users)
+    db.consult_record_users()
+    .then(rows => {
+        res.json(rows); // Los resultados en formato JSON
+    })
+    .catch(error => {
+        res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
+    });
+})
+
+app.get('/userById', function(req,res){
+    db.consult_record_users(req.query.id)
+    .then(rows => {
+        res.json(rows[0]); // Los resultados en formato JSON
+    })
+    .catch(error => {
+        res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
+    });
 })
 
 app.post('/user', function(req, res){
-    new User(0,req.body.name,req.body.document,req.email);
+    let user = new User(0,req.body.name,req.body.document,req.body.email);
     //Crear usuario en base de datos
-
-    res.status(200).json({ ok: true, message: 'Usuario creado exitosamente' });
+    db.insert_record_users(user).then(result => {
+        res.status(200).json({ ok: true, message: result});
+    })
+    .catch(error => {
+        res.status(500).json({ ok: true, message: error });
+    });
+    
 })
 
 app.put('/user', function(req, res){
@@ -41,36 +60,32 @@ app.put('/user', function(req, res){
 })
 
 app.get('/activity', function(req,res){
-    let activities = [];
-    if(req.query.id == 1){
-        activities.push(new Activity(1, 1, 'Actividad 1', 30))
-        activities.push(new Activity(2, 1, 'Actividad 2', 45))
-    }
-    if(req.query.id == 2){
-        activities.push(new Activity(3, 2, 'Actividad 1', 45))
-        activities.push(new Activity(4, 2, 'Actividad 2', 60))
-    }
-    res.json(activities)
+    db.consult_record_activity(req.query.id,"byUser")
+    .then(rows => {
+        res.json(rows); // Los resultados en formato JSON
+    })
+    .catch(error => {
+        res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
+    });
 })
 app.get('/activityById', function(req,res){
-    if(req.query.id == 1){
-        res.json(new Activity(1, 1, 'Actividad 1', 30))
-    }
-    if(req.query.id == 2){
-        res.json(new Activity(2, 1, 'Actividad 2', 45))
-    }
-    if(req.query.id == 3){
-        res.json(new Activity(3, 2, 'Actividad 1', 45))
-    }
-    if(req.query.id == 4){
-        res.json(new Activity(4, 2, 'Actividad 2', 60))
-    }
+    db.consult_record_activity(req.query.id,"byId")
+    .then(rows => {
+        res.json(rows[0]); // Los resultados en formato JSON
+    })
+    .catch(error => {
+        res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
+    });
 })
 app.post('/activity', function(req, res){
-    new Activity(0,req.body.idUser,req.body.name,req.minutes);
+    let activity = new Activity(0,req.body.idUser,req.body.name,req.body.minutes);
     //Crear actividad en base de datos
-
-    res.status(200).json({ ok: true, message: 'Actividad creada exitosamente' });
+    db.insert_record_activity(activity).then(result => {
+        res.status(200).json({ ok: true, message: result});
+    })
+    .catch(error => {
+        res.status(500).json({ ok: true, message: error });
+    });
 })
 
 app.put('/activity', function(req, res){

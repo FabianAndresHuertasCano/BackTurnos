@@ -17,46 +17,74 @@ conexion.connect((err) =>{
     
 })
 
-export function insert_record_users(id, name, document, email){
-    conexion.query("INSERT INTO users VALUES (" + id + ", '" + name + "', '" + document + "', '" + email + "',)", function(err, result){
-        if (err) {
-            console. log(err)
-        }
-        else{
-            console. log("succesful registration")
-        }
-    })
+export function insert_record_users(user){
+    return new Promise((resolve, reject) => {
+        conexion.query("INSERT INTO users (name, document, email) VALUES ('" + user.name + "', '" + user.document + "', '" + user.email + "')", function(err, result){
+            if (err) {
+                console.log(err);
+                reject(err.message);
+            } else {
+                console.log('Creación de usuario correcta');
+                resolve('Creación de usuario correcta');
+            }
+        });
+    });
 }
 
-export function consult_record_users(id, name, document, email){
-    conexion.query("SELECT * FROM users VALUES (" + id + ", '" + name + "', '" + document + "', '" + email + "',)", function(err, result){
-        if (err) {
-            console. log(err)
-        }
-        else{
-            console. log("succesful query")
-        }
-    })
+export function consult_record_users(id){
+    let query;
+    if(id){
+        query= "SELECT * FROM users WHERE id = " + id;
+    }
+    else{
+        query= "SELECT * FROM users"
+    }
+    return new Promise((resolve, reject) => {
+        conexion.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                reject('Error al consultar usuarios');
+            } else {
+                console.log('Consulta exitosa');
+                resolve(rows);
+            }
+        });
+    });
 }
 
-export function insert_record_activity(id, idUser, name, minutes){
-    conexion.query("INSERT INTO activity VALUES (" + id + ", '" + idUser + "', '" + name + "', '" + minutes + "',)", function(err, result){
-        if (err) {
-            console. log(err)
-        }
-        else{
-            console. log("succesful registration")
-        }
-    })
+export function insert_record_activity(activity){
+    return new Promise((resolve, reject) => {
+        conexion.query("INSERT INTO activity (idUser, name, minutes) VALUES (" + activity.idUser + ", '" + activity.name + "', " + activity.minutes + ")", function(err, result){
+            if (err) {
+                console. log(err)
+                reject('Error al insertar actividad');
+            }
+            else{
+                console.log('Actividad insertada exitosamente');
+                resolve('Actividad insertada correctamente');
+            }
+        })
+    });
 }
 
-export function consult_record_activity(id, idUser, name, minutes){
-    conexion.query("SELECT * FROM activity VALUES (" + id + ", '" + idUser + "', '" + name + "', '" + minutes + "',)", function(err, result){
-        if (err) {
-            console. log(err)
-        }
-        else{
-            console. log("succesful query")
-        }
-    })
+export function consult_record_activity(id,type){
+    let query;
+    if(type == 'byId'){
+        query = "SELECT * FROM activity WHERE id = " + id;
+    }
+    else{
+        query = "SELECT * FROM activity WHERE idUser = " + id;
+    }
+    console.log(query)
+    return new Promise((resolve, reject) => {
+        conexion.query(query, function(err, rows) {
+            if (err) {
+                console.log(err);
+                reject('Error al consultar actividad');
+            } else {
+                console.log('Consulta exitosa');
+                resolve(rows);
+            }
+        });
+    });
 }
