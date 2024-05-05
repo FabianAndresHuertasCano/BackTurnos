@@ -26,6 +26,7 @@ app.get('/user', function(req,res){
         res.json(rows); // Los resultados en formato JSON
     })
     .catch(error => {
+        console.error(error)
         res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
     });
 })
@@ -36,6 +37,7 @@ app.get('/userById', function(req,res){
         res.json(rows[0]); // Los resultados en formato JSON
     })
     .catch(error => {
+        console.error(error)
         res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
     });
 })
@@ -47,6 +49,7 @@ app.post('/user', function(req, res){
         res.status(200).json({ ok: true, message: result});
     })
     .catch(error => {
+        console.error(error)
         res.status(500).json({ ok: true, message: error });
     });
     
@@ -65,6 +68,7 @@ app.get('/activity', function(req,res){
         res.json(rows); // Los resultados en formato JSON
     })
     .catch(error => {
+        console.error(error)
         res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
     });
 })
@@ -74,6 +78,7 @@ app.get('/activityById', function(req,res){
         res.json(rows[0]); // Los resultados en formato JSON
     })
     .catch(error => {
+        console.error(error)
         res.status(500).json({ ok: true, message: error });// Mensaje de error si la consulta falló
     });
 })
@@ -84,6 +89,7 @@ app.post('/activity', function(req, res){
         res.status(200).json({ ok: true, message: result});
     })
     .catch(error => {
+        console.error(error)
         res.status(500).json({ ok: true, message: error });
     });
 })

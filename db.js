@@ -21,7 +21,7 @@ export function insert_record_users(user){
     return new Promise((resolve, reject) => {
         conexion.query("INSERT INTO users (name, document, email) VALUES ('" + user.name + "', '" + user.document + "', '" + user.email + "')", function(err, result){
             if (err) {
-                console.log(err);
+                console.error(err);
                 reject(err.message);
             } else {
                 console.log('Creación de usuario correcta');
@@ -42,7 +42,7 @@ export function consult_record_users(id){
     return new Promise((resolve, reject) => {
         conexion.query(query, function(err, rows) {
             if (err) {
-                console.log(err);
+                console.error(err);
                 reject('Error al consultar usuarios');
             } else {
                 console.log('Consulta exitosa');
@@ -56,7 +56,7 @@ export function insert_record_activity(activity){
     return new Promise((resolve, reject) => {
         conexion.query("INSERT INTO activity (idUser, name, minutes) VALUES (" + activity.idUser + ", '" + activity.name + "', " + activity.minutes + ")", function(err, result){
             if (err) {
-                console. log(err)
+                console.error(err)
                 reject('Error al insertar actividad');
             }
             else{
@@ -79,7 +79,7 @@ export function consult_record_activity(id,type){
     return new Promise((resolve, reject) => {
         conexion.query(query, function(err, rows) {
             if (err) {
-                console.log(err);
+                console.error(err);
                 reject('Error al consultar actividad');
             } else {
                 console.log('Consulta exitosa');
